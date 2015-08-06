@@ -34,10 +34,24 @@ public class MsgAdapter extends ArrayAdapter<Msg> {
 			viewHolder = new ViewHolder();
 			
 			viewHolder.leftLayout = (LinearLayout) view.findViewById(R.id.left_layout);
+			viewHolder.rightLayout = (LinearLayout)view.findViewById(R.id.right_layout);
+			viewHolder.leftMsg = (TextView) view.findViewById(R.id.left_msg);
+			viewHolder.rightMsg = (TextView) view.findViewById(R.id.right_msg);
+			view.setTag(viewHolder);
 			
 		}else{
 			view = convertView;  //convertView将加载好的进行缓存
 			viewHolder = (ViewHolder) view.getTag();  //重新获取viewHolder
+		}
+		
+		if(msg.getType() == Msg.TYPE_RECEIVED){
+			viewHolder.leftLayout.setVisibility(View.VISIBLE);
+			viewHolder.rightLayout.setVisibility(View.GONE);
+			viewHolder.leftMsg.setText(msg.getContent());
+		}else if(msg.getType() == Msg.TYPE_SENT){
+			viewHolder.rightLayout.setVisibility(View.VISIBLE);
+			viewHolder.leftLayout.setVisibility(View.GONE);
+			viewHolder.rightMsg.setText(msg.getContent());
 		}
 		
 		return view;
